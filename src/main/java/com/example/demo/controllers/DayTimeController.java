@@ -1,22 +1,23 @@
 package com.example.demo.controllers;
 
+import com.example.demo.services.HourService;
 import com.example.demo.time.domain.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
-import java.sql.Time;
+;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/v1/times")
+@RequiredArgsConstructor
+public class DayTimeController {
 
-public class TimeController {
-
-    @GetMapping("/info")
+    /*@GetMapping
     public HourPerDay getInfoHour() {
         LocalDateTime now = LocalDateTime.now();
         Hour hour = Hour.of(now.getHour());
@@ -29,5 +30,18 @@ public class TimeController {
         Long segundo = TimeUnitEnum.fromHour(TimeUnit.SECONDS, now.toLocalTime());
         Long milisegundo = TimeUnitEnum.fromHour(TimeUnit.MILLISECONDS, now.toLocalTime());
             return HourPerDay.from(hour, minutes, seconds, minuto.intValue());
+    }*/
+
+    private final HourService service;
+
+    @PostMapping
+    public  HourCreated createHour(@RequestBody DayTime hourBody) {
+        return service.createHour(hourBody.getHour(), hourBody.getMinutes(), hourBody.getSeconds());
+
+    }
+
+    @GetMapping
+    public ArrayList<DayTime> findAll() {
+        return service.findAll();
     }
 }

@@ -1,8 +1,6 @@
 package com.example.demo.configuration;
 
-import com.example.demo.serialization.HourAdapter;
-import com.example.demo.serialization.MinuteAdapter;
-import com.example.demo.serialization.SecondAdapter;
+import com.example.demo.serialization.NumberValueAdapter;
 import com.example.demo.time.domain.Hour;
 import com.example.demo.time.domain.Minutes;
 import com.example.demo.time.domain.Seconds;
@@ -15,10 +13,11 @@ import org.springframework.context.annotation.Configuration;
 public class GsonConfiguration {
     @Bean
     public Gson gson() {
+
         return new GsonBuilder()
-                .registerTypeAdapter(Hour.class, new HourAdapter())
-                .registerTypeAdapter(Minutes.class, new MinuteAdapter())
-                .registerTypeAdapter(Seconds.class, new SecondAdapter())
+                .registerTypeAdapter(Hour.class, new NumberValueAdapter<>( Hour::of))
+                .registerTypeAdapter(Minutes.class, new NumberValueAdapter<>(Minutes::of))
+                .registerTypeAdapter(Seconds.class, new NumberValueAdapter<>(Seconds::of))
                 .create();
     }
 }

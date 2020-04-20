@@ -1,10 +1,11 @@
 package com.example.demo.time.domain;
 
 import com.example.demo.common.Preconditions;
+import com.example.demo.serialization.NumberSerializable;
 import lombok.Value;
 
 @Value(staticConstructor = "of")
-public class Hour {
+public class Hour implements NumberSerializable {
 
     private final Integer value;
 
@@ -15,4 +16,8 @@ public class Hour {
     }
 
 
+    @Override
+    public Integer valueOf() {
+        return value;
+    }
 }
